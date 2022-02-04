@@ -1,5 +1,6 @@
 import os
 import random
+
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
@@ -46,7 +47,7 @@ def get_lessons(title: str, year: str, letter: str):
             subject=title).order_by('date')
         return lesson
     except Lesson.ObjectDoesNotExist:
-        print(f'Предмет {title} не найден')
+        print(f'Subject {title} does mot exist.')
 
 
 def create_commendation(schoolkid: Schoolkid, lesson_title: str):
@@ -74,4 +75,4 @@ def create_commendation(schoolkid: Schoolkid, lesson_title: str):
             created=lesson.date,
             teacher=lesson.teacher)
     except Subject.DoesNotExist:
-        print(f"Subject {lesson_title} not found.")
+        print(f"Subject {lesson_title} does not exist.")
