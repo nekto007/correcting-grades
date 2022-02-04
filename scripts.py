@@ -7,6 +7,7 @@ django.setup()
 
 from datacenter.models import (
     Schoolkid,
+    Chastisement,
     Mark,
 )
 
@@ -27,3 +28,8 @@ def fix_marks(schoolkid: Schoolkid):
     Mark.objects.filter(
         schoolkid=schoolkid,
         points__lt=4).update(points=5)
+
+
+def remove_chastisements(schoolkid: Schoolkid):
+    chastisement = Chastisement.objects.filter(schoolkid=schoolkid)
+    chastisement.delete()
