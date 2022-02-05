@@ -14,7 +14,7 @@ a database of diary ratings is also needed.
 1. Download `scripts.py`
 
 ```bash
-curl https://github.com/gennadis/e-diary/blob/master/scripts.py  --output fix_scripts.py
+curl https://github.com/nekto007/correcting-grades/blob/master/fix_scripts  --output fix_scripts.py
 ```
 
 2. Download the code, put it in the project folder next to `manage.py`
