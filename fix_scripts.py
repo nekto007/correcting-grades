@@ -3,17 +3,17 @@ import random
 
 import django
 
+from datacenter.models import (
+    Chastisement,
+    Commendation,
+    Lesson,
+    Mark,
+    Schoolkid,
+    Subject,
+)
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
-
-from datacenter.models import (
-    Schoolkid,
-    Chastisement,
-    Mark,
-    Lesson,
-    Subject,
-    Commendation,
-)
 
 
 def get_schoolkid(kid_name: str):
@@ -39,20 +39,7 @@ def remove_chastisements(schoolkid: Schoolkid):
     chastisement.delete()
 
 
-def get_lessons(title: str, year: str, letter: str):
-    try:
-        lesson = Lesson.objects.filter(
-            group_letter=letter,
-            year_of_study=year,
-            subject=title).order_by('date')
-        return lesson
-    except Lesson.ObjectDoesNotExist:
-        print(f'Subject {title} does mot exist.')
-
-
 def create_commendation(schoolkid: Schoolkid, lesson_title: str):
-    year_of_study = schoolkid.year_of_study
-    group_letter = schoolkid.group_letter
     commendations = [
         'Прекрасно!',
         'Молодец!',
@@ -66,8 +53,11 @@ def create_commendation(schoolkid: Schoolkid, lesson_title: str):
         'Здорово!'
     ]
     try:
-        subject = Subject.objects.get(title=lesson_title, year_of_study=year_of_study)
-        lesson = random.choice(get_lessons(subject, year_of_study, group_letter))
+        subject = Subject.objects.get(title=lesson_title, year_of_study=schoolkid.year_of_study)
+        lesson = Lesson.objects.filter(
+            group_letter=schoolkid.group_letter,
+            year_of_study=schoolkid.year_of_study,
+            subject=subject).order_by('date').first()
         Commendation.objects.create(
             schoolkid=schoolkid,
             subject=lesson.subject,
