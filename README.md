@@ -14,7 +14,7 @@ a database of diary ratings is also needed.
 1. Download `scripts.py`
 
 ```bash
-curl https://github.com/gennadis/e-diary/blob/master/scripts.py  --output scripts.py
+curl https://github.com/gennadis/e-diary/blob/master/scripts.py  --output fix_scripts.py
 ```
 
 2. Download the code, put it in the project folder next to `manage.py`
@@ -25,10 +25,11 @@ curl https://github.com/gennadis/e-diary/blob/master/scripts.py  --output script
 python manage.py shell
 ```
 
-4. Import `scripts.py` in Django shell
+4. Import `fix_scripts.py` in Django shell
 
 ```python
-import scripts
+from fix_scripts import get_schoolkid, fix_marks, remove_chastisements, create_commendation
+
 ```                        
 
 ## Examples
@@ -55,11 +56,7 @@ fix_marks(schoolkid)
 remove_chastisements(schoolkid)
 ```
 
-4. `get_lessons(title, year, letter)` :
-   Accepts the name of the subject, the year and the letter of the student's class, returns a set of found objects of
-   the Lesson model.
-
-`create_commendation(kid_name, lesson_title)` :
+4. `create_commendation(kid_name, lesson_title)` :
 Accepts the student's name, the name of the lesson subject and creates an object of the Recommendation model with the
 text of praise on a random day of lessons held, run
 
